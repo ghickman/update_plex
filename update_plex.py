@@ -9,6 +9,7 @@ import requests
 
 @click.command()
 @click.option('--host')
+@click.version_option()
 def run(host):
     if not host:
         path = '~/.config/update_plex'
