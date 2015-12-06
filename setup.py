@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='update-plex',
-    version='1.0.0',
+    version='1.1.0',
     description='Tell your Plex TV library to update',
     author='George Hickman',
     author_email='george@ghickman.co.uk',
