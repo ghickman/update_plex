@@ -1,5 +1,6 @@
 import configparser
 import os
+import sys
 import xml.etree.cElementTree as etree
 
 import click
@@ -10,9 +11,15 @@ import requests
 @click.option('--host')
 def run(host):
     if not host:
+        path = '~/.config/update_plex'
         config = configparser.ConfigParser()
-        config.read(os.path.expanduser('~/.config/update_plex'))
-        host = config['DEFAULT']['host']
+        config.read(os.path.expanduser(path))
+        try:
+            host = config['DEFAULT']['host']
+        except KeyError:
+            msg = 'Don\'t know where plex is. Have you created the config file in "{}"?'
+            click.echo(msg.format(path), err=True)
+            sys.exit(1)
 
     url = 'http://{}/library/sections'.format(host)
 
