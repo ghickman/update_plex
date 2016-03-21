@@ -22,9 +22,17 @@ def run(host):
             click.echo(msg.format(path), err=True)
             sys.exit(1)
 
+        try:
+            token = config['DEFAULT']['token']
+        except KeyError:
+            msg = 'Can\'t authenticate without a token. Have you created the config file in "{}"?'
+            click.echo(msg.format(path), err=True)
+            sys.exit(1)
+
     url = 'http://{}/library/sections'.format(host)
 
     s = requests.Session()
+    s.headers = {'X-Plex-Token': token}
     r = s.get(url)
     r.raise_for_status()
 
